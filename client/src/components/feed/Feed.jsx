@@ -5,12 +5,14 @@ import "./feed.css";
 import axios from "axios";
 
 // key should be unique
-export default function Feed() {
+export default function Feed({ username }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get("posts/timeline/623c1968265dbe51d2e99a25"); //postss in mongodb database?
+      const res = username
+        ? await axios.get("/posts/profile/" + username)
+        : await axios.get("posts/timeline/623c1968265dbe51d2e99a25"); //postss in mongodb database?
       setPosts(res.data);
     };
     fetchPosts();
